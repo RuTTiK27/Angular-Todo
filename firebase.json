@@ -1,1 +1,10 @@
-{}
+{
+    "hosting": {
+    "public": "dist/todo/browser",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

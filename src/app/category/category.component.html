@@ -13,7 +13,9 @@
             <div class="row">
                 <div class="col-md-10 form-group">
                     <input 
-                    ngModel 
+                    
+                    [(ngModel)]="categoryName" 
+
                     type="text" 
                     name="categoryName" 
                     class="form-control-plaintext drop-shadow" 
@@ -25,7 +27,9 @@
                     
                     >
                 </div>
-                <button type="submit" class="btn btn-primary col-md-2 btn-todo btn-block drop-shadow">Add</button>
+                <button type="submit" class="btn btn-primary col-md-2 btn-todo btn-block drop-shadow">
+                    {{dataStatus}}
+                </button>
                 <div class="text-danger ml-3" *ngIf="f.submitted && category.invalid && category.errors?.['required']">
                     Category is required...
                 </div>
@@ -36,26 +40,38 @@
 </div>
 
 <div class="row categories-list">
-    <div class="col-md-3">
-        <div class="card drop-shadow">
+    <div class="col-md-3" *ngFor="let category of allCategories | async">
+        <div class="card drop-shadow" 
+        
+        [style.border-left-color]="category.colorCode"
+        
+        >
             <div class="card-body">
                 <div class="clearfix">
                     <div class="float-start">
                         <div class="badge badge-primary">CATEGORY</div>
                     </div>
                     <div class="float-end cat-tools">
-                        <small> <i class="fa fa-pencil-alt text-success"></i> </small>
-                        <small> <i class="fas fa-trash text-danger"></i> </small>
+                        <small> <i class="fa fa-pencil-alt text-success"
+                            
+                            (click)="onEdit(category.id,category.category)"
+                            
+                            ></i> </small>
+                        <small> <i class="fas fa-trash text-danger"
+                            
+                            (click)="deleteCategory(category.id)"
+                            
+                            ></i> </small>
                     </div>
                 </div>
                 
-                <div class="todo-content">
-                    <h3>Category</h3>
+                <div class="todo-content" [routerLink]="['/todo',category.id]">
+                    <h3>{{category.category}}</h3>
                     <small class="text-secondary">
                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
                     </small>
                 </div>
-                <span class="badge badge-danger">3 - Todos</span>
+                <span class="badge badge-danger">{{category.todoCount}} - Todos</span>
             </div>
         </div>
     </div>
